@@ -1,0 +1,306 @@
+/* Challenges.css - Updated with Orange Start Buttons */
+
+.challenges-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: 'Poppins', sans-serif;
+}
+
+.challenges-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.challenges-header h1 {
+  color: #0A2E5C;
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+}
+
+.challenges-header p {
+  color: #666;
+  font-size: 1.1rem;
+}
+
+/* Streak Section */
+.streak-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  gap: 20px;
+}
+
+.streak-card {
+  display: flex;
+  gap: 30px;
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.streak-count {
+  text-align: center;
+}
+
+.streak-number {
+  display: block;
+  font-size: 2rem;
+  font-weight: bold;
+  color: #FF6B35;
+}
+
+.streak-label {
+  display: block;
+  font-size: 0.9rem;
+  color: #666;
+  margin-top: 5px;
+}
+
+.log-reading-btn {
+  background-color: #FF6B35;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.log-reading-btn:hover {
+  background-color: #E55A2B;
+  transform: translateY(-2px);
+}
+
+/* Challenges Grid */
+.challenges-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 20px;
+}
+
+.challenge-card {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  border-left: 4px solid #FF6B35;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.challenge-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+}
+
+.challenge-card.completed {
+  border-left-color: #38A169;
+  background: linear-gradient(135deg, #ffffff 0%, #f0fff4 100%);
+}
+
+.challenge-card.enrolled {
+  border-left-color: #3182CE;
+}
+
+.challenge-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 15px;
+}
+
+.challenge-header h3 {
+  color: #0A2E5C;
+  font-size: 1.3rem;
+  margin: 0;
+  flex: 1;
+}
+
+.reward-badge {
+  background-color: #38A169;
+  color: white;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: bold;
+  margin-left: 10px;
+}
+
+.challenge-description {
+  color: #666;
+  margin-bottom: 20px;
+  line-height: 1.5;
+}
+
+/* Progress Section */
+.progress-section {
+  margin-bottom: 15px;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 8px;
+  background-color: #E2E8F0;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+
+.progress-fill {
+  height: 100%;
+  background-color: #FF6B35;
+  border-radius: 4px;
+  transition: width 0.3s ease;
+}
+
+.progress-text {
+  font-size: 0.9rem;
+  color: #666;
+  font-weight: 500;
+}
+
+/* Status Badges */
+.challenge-status {
+  margin-bottom: 15px;
+}
+
+.status-badge {
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.completed-badge {
+  background-color: #C6F6D5;
+  color: #22543D;
+}
+
+.in-progress-badge {
+  background-color: #BEE3F8;
+  color: #1A365D;
+}
+
+.not-started-badge {
+  background-color: #EDF2F7;
+  color: #4A5568;
+}
+
+/* Action Buttons */
+.challenge-actions {
+  margin-top: 15px;
+}
+
+/* ORANGE START CHALLENGE BUTTON */
+.start-challenge-btn {
+  background-color: #FF6B35;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 100%;
+}
+
+.start-challenge-btn:hover:not(:disabled) {
+  background-color: #E55A2B;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 107, 53, 0.3);
+}
+
+.start-challenge-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.abandon-challenge-btn {
+  background-color: transparent;
+  color: #E53E3E;
+  border: 2px solid #E53E3E;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 100%;
+}
+
+.abandon-challenge-btn:hover {
+  background-color: #FED7D7;
+  transform: translateY(-2px);
+}
+
+.completed-text {
+  color: #38A169;
+  font-weight: 600;
+  text-align: center;
+  display: block;
+  font-size: 1rem;
+}
+
+/* Empty State */
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: #666;
+}
+
+.empty-state h3 {
+  color: #4A5568;
+  margin-bottom: 10px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .challenges-container {
+    padding: 15px;
+  }
+  
+  .streak-section {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .streak-card {
+    justify-content: space-around;
+  }
+  
+  .challenges-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .challenge-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .reward-badge {
+    margin-left: 0;
+    margin-top: 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .challenges-header h1 {
+    font-size: 2rem;
+  }
+  
+  .streak-card {
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .streak-number {
+    font-size: 1.5rem;
+  }
+}
