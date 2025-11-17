@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import BookCard from '../components/BookCard';
 import './Dashboard.css';
+import { api, handleResponse } from '../config/api';
 
 const Dashboard = () => {
   const userName = localStorage.getItem('littyUsername') || "Reader";
@@ -70,33 +71,15 @@ const Dashboard = () => {
 
   const fetchUserData = async () => {
     try {
-      const token = localStorage.getItem('littyToken');
-      
       // Fetch user streak data
-      const streakRes = await fetch('http://localhost:8000/api/user/streak', {
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
-      });
-      
-      if (streakRes.ok) {
-        const streakData = await streakRes.json();
-        setUserStreak(streakData);
-      }
+      const streakData = await api.getUserStreak().then(handleResponse);
+      setUserStreak(streakData);
 
       // Fetch user's active challenges
-      const challengesRes = await fetch('http://localhost:8000/api/user/challenges', {
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
-      });
-      
-      if (challengesRes.ok) {
-        const challengesData = await challengesRes.json();
-        // Filter for active (not completed) challenges
-        const active = challengesData.filter(challenge => !challenge.is_completed);
-        setActiveChallenges(active.slice(0, 3)); // Show top 3 active challenges
-      }
+      const challengesData = await api.getUserChallenges().then(handleResponse);
+      // Filter for active (not completed) challenges
+      const active = challengesData.filter(challenge => !challenge.is_completed);
+      setActiveChallenges(active.slice(0, 3)); // Show top 3 active challenges
 
     } catch (error) {
       console.error('Error fetching user data:', error);
@@ -108,20 +91,13 @@ const Dashboard = () => {
   const fetchBookContent = async (searchQuery) => {
     try {
       console.log('🔍 Fetching book:', searchQuery);
-      const response = await fetch(`http://localhost:8000/api/books/search-and-read?query=${encodeURIComponent(searchQuery)}`);
-      
-      if (!response.ok) {
-        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-      }
-      
-      const bookData = await response.json();
+      const bookData = await api.searchAndReadBook(searchQuery).then(handleResponse);
       console.log('📊 Book data received:', {
         title: bookData.book.title,
         contentLength: bookData.content?.length,
         wordCount: bookData.word_count,
         estimatedPages: bookData.estimated_pages
       });
-      
       return bookData;
     } catch (error) {
       console.error('❌ Fetch error:', error);
@@ -281,24 +257,14 @@ ${bookData.content.substring(0, 500)}...
   // Log reading session to update streaks and challenges
   const logReadingSession = async () => {
     try {
-      const token = localStorage.getItem('littyToken');
-      const response = await fetch('http://localhost:8000/api/reader/log-reading', {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          reading_seconds: 1800, // 30 minutes
-          page_count: 15
-        })
-      });
+      await api.logReadingSession({
+        reading_seconds: 1800, // 30 minutes
+        page_count: 15
+      }).then(handleResponse);
       
-      if (response.ok) {
-        // Refresh user data to show updated streaks and progress
-        await fetchUserData();
-        alert('Reading session logged! Your progress has been updated.');
-      }
+      // Refresh user data to show updated streaks and progress
+      await fetchUserData();
+      alert('Reading session logged! Your progress has been updated.');
     } catch (error) {
       console.error('Error logging reading:', error);
     }

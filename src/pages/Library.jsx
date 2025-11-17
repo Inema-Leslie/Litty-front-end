@@ -1,5 +1,5 @@
-// pages/Library.jsx
 import React, { useState, useEffect } from "react";
+import { api, handleResponse } from '../config/api';
 
 function Library() {
   const [libraryBooks, setLibraryBooks] = useState([]);
@@ -29,13 +29,7 @@ function Library() {
 
     try {
       console.log('📖 Fetching content for:', book.title);
-      const response = await fetch(`http://localhost:8000/api/books/search-and-read?query=${encodeURIComponent(book.title)}`);
-      
-      if (!response.ok) {
-        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-      }
-      
-      const bookData = await response.json();
+      const bookData = await api.searchAndReadBook(book.title).then(handleResponse);
       console.log('✅ Full content loaded:', bookData.content.length, 'characters');
       setBookContent(bookData.content);
     } catch (error) {
@@ -493,8 +487,8 @@ function Library() {
                   width: "80px",
                   height: "110px",
                   display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
+                  alignItems: 'center',
+                  justifyContent: 'center',
                   borderRadius: "8px",
                   overflow: "hidden",
                   flexShrink: 0,

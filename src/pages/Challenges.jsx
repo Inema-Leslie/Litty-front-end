@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './Challenges.css';
+import { api, handleResponse } from '../config/api';
 
 function Challenges() {
   const [challenges, setChallenges] = useState([]);
@@ -15,45 +16,17 @@ function Challenges() {
 
   const fetchChallengesData = async () => {
     try {
-      const token = localStorage.getItem('littyToken');
-      
       // Fetch all available challenges
-      const challengesRes = await fetch('http://localhost:8000/api/challenges', {
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
-      });
-      
-      if (!challengesRes.ok) {
-        throw new Error('Failed to fetch challenges');
-      }
-      
-      const challengesData = await challengesRes.json();
+      const challengesData = await api.getChallenges().then(handleResponse);
       setChallenges(challengesData);
 
       // Fetch user's challenge progress
-      const userChallengesRes = await fetch('http://localhost:8000/api/user/challenges', {
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
-      });
-      
-      if (userChallengesRes.ok) {
-        const userChallengesData = await userChallengesRes.json();
-        setUserChallenges(userChallengesData);
-      }
+      const userChallengesData = await api.getUserChallenges().then(handleResponse);
+      setUserChallenges(userChallengesData);
 
       // Fetch user streak data
-      const streakRes = await fetch('http://localhost:8000/api/user/streak', {
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
-      });
-      
-      if (streakRes.ok) {
-        const streakData = await streakRes.json();
-        setUserStreak(streakData);
-      }
+      const streakData = await api.getUserStreak().then(handleResponse);
+      setUserStreak(streakData);
 
     } catch (error) {
       console.error('Error fetching challenges:', error);
@@ -66,20 +39,7 @@ function Challenges() {
   const startChallenge = async (challengeId) => {
     try {
       setEnrolling(challengeId);
-      const token = localStorage.getItem('littyToken');
-      
-      const response = await fetch(`http://localhost:8000/api/challenges/${challengeId}/start`, {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        }
-      });
-      
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.detail || 'Failed to start challenge');
-      }
+      await api.startChallenge(challengeId).then(handleResponse);
       
       // Refresh data to show the newly enrolled challenge
       await fetchChallengesData();
@@ -100,19 +60,7 @@ function Challenges() {
     }
     
     try {
-      const token = localStorage.getItem('littyToken');
-      
-      const response = await fetch(`http://localhost:8000/api/challenges/${challengeId}/abandon`, {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        }
-      });
-      
-      if (!response.ok) {
-        throw new Error('Failed to abandon challenge');
-      }
+      await api.abandonChallenge(challengeId).then(handleResponse);
       
       // Refresh data
       await fetchChallengesData();
@@ -127,22 +75,10 @@ function Challenges() {
   // Log reading session (updates streaks and challenge progress)
   const logReadingSession = async () => {
     try {
-      const token = localStorage.getItem('littyToken');
-      const response = await fetch('http://localhost:8000/api/reader/log-reading', {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          reading_seconds: 1800, // 30 minutes
-          page_count: 15
-        })
-      });
-      
-      if (!response.ok) {
-        throw new Error('Failed to log reading session');
-      }
+      await api.logReadingSession({
+        reading_seconds: 1800, // 30 minutes
+        page_count: 15
+      }).then(handleResponse);
       
       // Refresh data to show updated streaks and progress
       await fetchChallengesData();
