@@ -64,7 +64,7 @@ function App() {
       <Routes>
         {/* Public routes */}
         <Route 
-          path="/auth" 
+          path="/login" 
           element={
             !isAuthenticated ? 
             <Auth onLogin={handleLogin} /> : 
@@ -73,13 +73,13 @@ function App() {
         />
         <Route path="/home" element={<Home />} />
         
-        {/* Protected routes - redirect to auth if not authenticated */}
+        {/* Protected routes - redirect to login if not authenticated */}
         <Route 
           path="/" 
           element={
             isAuthenticated ? 
             <Dashboard /> : 
-            <Navigate to="/auth" />
+            <Navigate to="/login" />
           } 
         />
         <Route 
@@ -87,7 +87,7 @@ function App() {
           element={
             isAuthenticated ? 
             <Dashboard /> : 
-            <Navigate to="/auth" />
+            <Navigate to="/login" />
           } 
         />
         <Route 
@@ -95,7 +95,7 @@ function App() {
           element={
             isAuthenticated ? 
             <Library /> : 
-            <Navigate to="/auth" />
+            <Navigate to="/login" />
           } 
         />
         <Route 
@@ -103,7 +103,7 @@ function App() {
           element={
             isAuthenticated ? 
             <Analytics /> : 
-            <Navigate to="/auth" />
+            <Navigate to="/login" />
           } 
         />
         <Route 
@@ -111,7 +111,7 @@ function App() {
           element={
             isAuthenticated ? 
             <Challenges /> : 
-            <Navigate to="/auth" />
+            <Navigate to="/login" />
           } 
         />
         <Route 
@@ -119,7 +119,7 @@ function App() {
           element={
             isAuthenticated ? 
             <BookDetail /> : 
-            <Navigate to="/auth" />
+            <Navigate to="/login" />
           } 
         />
         <Route
@@ -127,12 +127,12 @@ function App() {
           element={
             isAuthenticated ?
             <Profile onLogout={handleLogout}/> :
-            <Navigate to="/auth" />
+            <Navigate to="/login" />
           }
         />
         
         {/* Fallback redirect */}
-        <Route path="*" element={<Navigate to={isAuthenticated ? "/dashboard" : "/auth"} />} />
+        <Route path="*" element={<Navigate to={isAuthenticated ? "/dashboard" : "/login"} />} />
       </Routes>
       
       {isAuthenticated && <Footer />}
