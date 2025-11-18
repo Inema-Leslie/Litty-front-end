@@ -15,19 +15,19 @@ function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
-  // Check authentication on app start
+  
   useEffect(() => {
     const token = localStorage.getItem('littyToken');
     setIsAuthenticated(!!token);
     setIsLoading(false);
   }, []);
 
-  // Handle login
+  
   const handleLogin = () => {
     setIsAuthenticated(true);
   };
 
-  // Handle logout
+  
   const handleLogout = () => {
     localStorage.removeItem('littyToken');
     localStorage.removeItem('littyUsername');
@@ -36,7 +36,7 @@ function App() {
     setIsAuthenticated(false);
   };
 
-  // If still loading, show loading screen
+  
   if (isLoading) {
     return (
       <div style={{
