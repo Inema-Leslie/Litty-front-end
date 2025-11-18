@@ -28,7 +28,7 @@ export default function Auth({ onLogin }) {
 
     try {
       const endpoint = isLogin ? 'login' : 'register';
-      const url = `http://localhost:8000/api/auth/${endpoint}`;
+      const url = `https://litty-backend.onrender.com/api/auth/${endpoint}`;
       
       setDebugInfo(`Sending request to: ${url}`);
       
@@ -74,7 +74,6 @@ export default function Auth({ onLogin }) {
     }
   };
 
-  // Rest of your code remains the same...
   const handleDemoAuth = () => {
     if (isLogin) {
       alert(`Welcome back to Litty, ${form.username || 'Demo User'}!`);
